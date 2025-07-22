@@ -1,0 +1,65 @@
+<!-- core/templates/core/user_management.html -->
+{% extends "core/layout.html" %} {% block content %}
+<h1>{{ title }}</h1>
+<form action="{% url 'add_user' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required />
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required />
+  </div>
+  <div class="file-upload-container">
+    <label for="avatar">Avatar:</label>
+    <div class="file-input-controls">
+      <input type="file" id="avatar" name="avatar" />
+      <button type="button" id="clearFileButton">Clear</button>
+    </div>
+  </div>
+  <button type="submit">Add User</button>
+</form>
+
+<h2>User List</h2>
+{% if users %}
+<p>Data source: {{ data_source }}</p>
+<ul>
+  {% for user_profile in users %}
+  <li>
+    {% if user_profile.avatar %}
+    <img
+      src="{{ user_profile.avatar.url }}"
+      alt="{{ user_profile.user.first_name }}"
+      width="50"
+      height="50"
+    />
+    {% else %}
+    <span>No avatar</span>
+    {% endif %}
+    <span
+      >{{ user_profile.user.first_name }} ({{ user_profile.user.email }})</span
+    >
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No users found</p>
+{% endif %}
+
+<script>
+  // JavaScript to handle the clear button functionality
+  document
+    .getElementById("clearFileButton")
+    .addEventListener("click", function () {
+      var fileInput = document.getElementById("avatar");
+      // Create a new file input element
+      var newFileInput = document.createElement("input");
+      newFileInput.type = "file";
+      newFileInput.id = "avatar";
+      newFileInput.name = "avatar";
+      // Replace the old file input with the new one
+      fileInput.parentNode.replaceChild(newFileInput, fileInput);
+    });
+</script>
+{% endblock %}
