@@ -13,7 +13,11 @@ services:
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - DATABASE_URL=mysql://django:django@db:3308/django
+      - MYSQL_DATABASE=django
+      - MYSQL_USER=django
+      - MYSQL_PASSWORD=django
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3308
     volumes:
       - media_data:/app/media
     depends_on:

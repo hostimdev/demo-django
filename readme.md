@@ -48,7 +48,7 @@ The application uses Redis for caching user data:
 
 The application uses MySQL:
 
-- Connected via the DATABASE_URL environment variable
+- The app uses MySQL, configured via environment variables (MYSQL\_\*)
 - Migrations are automatically applied at container startup
 
 ## How to run it
